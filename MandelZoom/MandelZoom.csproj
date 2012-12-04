@@ -74,7 +74,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>
@@ -82,6 +82,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <Win32Resource>MandelZoom.res</Win32Resource>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>MandelZoom.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -126,6 +129,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="MandelZoom.res" />
+    <None Include="MandelZoom.snk" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
