@@ -9,7 +9,7 @@
 	{
 		private static readonly Random Random = new Random();
 
-		internal static Bitmap RenderInitialFractal(Size imageSize, RectangleD complexArea, int maximumIterations, Func<int, Color> colorFunction)
+		internal static Bitmap RenderInitialFractal(Size imageSize, RectangleD complexArea, int maximumIterations, Func<int, double, Color> colorFunction)
 		{
 			var fractalBitmap = new Bitmap(imageSize.Width, imageSize.Height, PixelFormat.Format24bppRgb);
 			// Use LockBits and pointers for faster image processing. GetPixel and SetPixel are slow.
@@ -28,9 +28,10 @@
 						// Convert pixel coords to complex plane coords, using the center of the pixel, not the upper left corner.
 						double x = (complexArea.Width * ((xPixelCoord + 0.5D) / imageSize.Width)) + complexArea.Left;
 						double y = (complexArea.Height * ((yPixelCoord + 0.5D) / imageSize.Height)) + complexArea.Top;
-						// Color pixel based on number of iterations
+						// Color pixel based on number of iterations and escape magnitude
 						// Save time by only calculating iterations for points not in one of the large bulbs, as many pixels in the initial fractal are.
-						Color color = (IsInCardioid(x, y) || IsInPeriod2Bulb(x, y)) ? Color.Black : colorFunction(CountIterations(x, y, maximumIterations));
+						double finalMagnitude;
+						Color color = (IsInCardioid(x, y) || IsInPeriod2Bulb(x, y)) ? Color.Black : colorFunction(CountIterations(x, y, maximumIterations, out finalMagnitude), finalMagnitude);
 						*mirrorBGR = *pointerBGR = color.B;
 						*++mirrorBGR = *++pointerBGR = color.G;
 						*++mirrorBGR = *++pointerBGR = color.R;
@@ -40,7 +41,7 @@
 			fractalBitmap.UnlockBits(fractalBitmapData);
 			return fractalBitmap;
 		}
-		internal static Bitmap RenderFractal(Size imageSize, RectangleD complexArea, int maximumIterations, Func<int, Color> colorFunction)
+		internal static Bitmap RenderFractal(Size imageSize, RectangleD complexArea, int maximumIterations, Func<int, double, Color> colorFunction)
 		{
 			var fractalBitmap = new Bitmap(imageSize.Width, imageSize.Height, PixelFormat.Format24bppRgb);
 			// Use LockBits and pointers for faster image processing. GetPixel and SetPixel are slow.
@@ -57,8 +58,9 @@
 						// Convert pixel coords to complex plane coords, using the center of the pixel, not the upper left corner.
 						double x = (complexArea.Width * ((xPixelCoord + 0.5D) / imageSize.Width)) + complexArea.Left;
 						double y = (complexArea.Height * ((yPixelCoord + 0.5D) / imageSize.Height)) + complexArea.Top;
-						// Color pixel based on number of iterations
-						Color color = colorFunction(CountIterations(x, y, maximumIterations));
+						// Color pixel based on number of iterations and escape magnitude
+						double finalMagnitude;
+						Color color = colorFunction(CountIterations(x, y, maximumIterations, out finalMagnitude), finalMagnitude);
 						*pointerBGR = color.B;
 						*++pointerBGR = color.G;
 						*++pointerBGR = color.R;
@@ -107,20 +109,20 @@
 			return new RectangleD(newLeft, newTop, currentArea.Width / 10D, currentArea.Height / 10D);
 		}
 
-		internal static Color SilverFrostColorFunction(int iterations)
+		internal static Color SilverFrostColorFunction(int iterations, double magnitude)
 		{
 			if (iterations < 0) return Color.Black;
 			int value = iterations % 255;
 			return Color.FromArgb(value + 1, value + 1, value + 1);
 		}
-		internal static Color NeonGlowColorColorFunction(int iterations)
+		internal static Color NeonGlowColorColorFunction(int iterations, double magnitude)
 		{
 			if (iterations < 0) return Color.Black;
 			int value = iterations % 512;
 			if (value > 255) value = 511 - value;
 			return Color.FromArgb(0, value, 255 - value);
 		}
-		internal static Color SolarFlareColorColorFunction(int iterations)
+		internal static Color SolarFlareColorColorFunction(int iterations, double magnitude)
 		{
 			if (iterations < 0) return Color.Black;
 			int value = (iterations + 128) % 256;
@@ -159,7 +161,7 @@
 		{
 			return ((x + 1) * (x + 1)) + (y * y) < 0.0625;
 		}
-		private static int CountIterations(double x, double y, int maximumIterations)
+		private static int CountIterations(double x, double y, int maximumIterations, out double finalMagnitude)
 		{
 			double currentX = x;
 			double currentY = y;
@@ -174,8 +176,10 @@
 				{
 					if ((previousX * previousX) + (previousY * previousY) >= 4)
 					{
+						finalMagnitude = Math.Sqrt((previousX * previousX) + (previousY * previousY));
 						return counter - 1;
 					}
+					finalMagnitude = Math.Sqrt(currentXSquared + currentYSquared);
 					return counter;
 				}
 				previousX = (currentXSquared - currentYSquared) + x;
@@ -184,6 +188,7 @@
 				currentY = ((previousX + previousX) * previousY) + y;
 			}
 			// Return -1 for points considered inside the set.
+			finalMagnitude = 0;
 			return -1;
 		}
 	}

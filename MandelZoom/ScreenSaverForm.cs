@@ -20,7 +20,7 @@
 
 		private RectangleD initialFractalArea;
 		private Bitmap initialFractalBitmap;
-		private Func<int, Color> colorFunction;
+		private Func<int, double, Color> colorFunction;
 		private BackgroundWorker looper;
 
 		internal ScreenSaverForm(bool isMiniPreview)
