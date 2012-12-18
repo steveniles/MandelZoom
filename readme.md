@@ -6,6 +6,7 @@ A fractal screen saver that zooms in on the Mandelbrot set. Unlike most fractal 
 * [Screenshot 1](http://steveniles.ca/mandelzoom/images/Silver%20Frost.png)  
 * [Screenshot 2](http://steveniles.ca/mandelzoom/images/Neon%20Glow.png)  
 * [Screenshot 3](http://steveniles.ca/mandelzoom/images/Solar%20Flare.png)
+* [Screenshot 4](http://steveniles.ca/mandelzoom/images/Psychedelic.png)
 
 ##Requirements
 * Microsoft Windows (64-bit)  
