@@ -150,7 +150,7 @@
 		private void AssignColorScheme()
 		{
 			int colorScheme = Settings.Default.ColorScheme;
-			if (Settings.Default.RandomColorScheme) colorScheme = Random.Next(3);
+			if (Settings.Default.RandomColorScheme) colorScheme = Random.Next(4);
 			switch (colorScheme)
 			{
 				default:
