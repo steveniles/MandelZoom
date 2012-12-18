@@ -73,6 +73,16 @@ namespace MandelZoom.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Psychedelic {
+            get {
+                object obj = ResourceManager.GetObject("Psychedelic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SilverFrost {
             get {
                 object obj = ResourceManager.GetObject("SilverFrost", resourceCulture);

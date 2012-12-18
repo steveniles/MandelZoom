@@ -115,19 +115,27 @@
 			int value = iterations % 255;
 			return Color.FromArgb(value + 1, value + 1, value + 1);
 		}
-		internal static Color NeonGlowColorColorFunction(int iterations, double magnitude)
+		internal static Color NeonGlowColorFunction(int iterations, double magnitude)
 		{
 			if (iterations < 0) return Color.Black;
 			int value = iterations % 512;
 			if (value > 255) value = 511 - value;
 			return Color.FromArgb(0, value, 255 - value);
 		}
-		internal static Color SolarFlareColorColorFunction(int iterations, double magnitude)
+		internal static Color SolarFlareColorFunction(int iterations, double magnitude)
 		{
 			if (iterations < 0) return Color.Black;
 			int value = (iterations + 128) % 256;
 			if (value > 127) value = 255 - value;
 			return Color.FromArgb(255, value + 128, 0);
+		}
+		internal static Color PsychedelicColorFunction(int iterations, double magnitude)
+		{
+			if (iterations < 0) return Color.Black;
+			int red = (magnitude >= 16) ? 1 : 255 - (int)(((magnitude - 4) / 12) * 254);
+			int green = ((iterations * 4) % 255) + 1;
+			int blue = 255 - (((iterations * 4) + 127) % 255);
+			return Color.FromArgb(red, green, blue);
 		}
 
 		private static bool IsViableRegion(Bitmap testBitmap, Rectangle testRectangle)
@@ -172,9 +180,9 @@
 			{
 				double currentXSquared = currentX * currentX;
 				double currentYSquared = currentY * currentY;
-				if (currentXSquared + currentYSquared >= 4)
+				if (currentXSquared + currentYSquared >= 16)
 				{
-					if ((previousX * previousX) + (previousY * previousY) >= 4)
+					if ((previousX * previousX) + (previousY * previousY) >= 16)
 					{
 						finalMagnitude = Math.Sqrt((previousX * previousX) + (previousY * previousY));
 						return counter - 1;

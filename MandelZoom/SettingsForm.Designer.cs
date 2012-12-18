@@ -83,7 +83,8 @@
 			this.colorSchemeComboBox.Items.AddRange(new object[] {
             "Silver Frost",
             "Neon Glow",
-            "Solar Flare"});
+            "Solar Flare",
+            "Psychedelic"});
 			this.colorSchemeComboBox.Location = new System.Drawing.Point(6, 19);
 			this.colorSchemeComboBox.Name = "colorSchemeComboBox";
 			this.colorSchemeComboBox.Size = new System.Drawing.Size(126, 21);

@@ -171,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MandelZoom.ico" />
+    <None Include="Resources\Psychedelic.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

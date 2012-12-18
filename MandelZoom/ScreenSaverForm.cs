@@ -157,10 +157,13 @@
 					this.colorFunction = Mandelbrot.SilverFrostColorFunction;
 					break;
 				case 1:
-					this.colorFunction = Mandelbrot.NeonGlowColorColorFunction;
+					this.colorFunction = Mandelbrot.NeonGlowColorFunction;
 					break;
 				case 2:
-					this.colorFunction = Mandelbrot.SolarFlareColorColorFunction;
+					this.colorFunction = Mandelbrot.SolarFlareColorFunction;
+					break;
+				case 3:
+					this.colorFunction = Mandelbrot.PsychedelicColorFunction;
 					break;
 			}
 		}

@@ -40,6 +40,11 @@
 					this.creatorLinkLabel.LinkColor = Color.Orange;
 					this.creatorLinkLabel.ActiveLinkColor = Color.Yellow;
 					break;
+				case 3:
+					this.pictureBox.Image = Resources.Psychedelic;
+					this.creatorLinkLabel.LinkColor = Color.LightPink;
+					this.creatorLinkLabel.ActiveLinkColor = Color.LightGreen;
+					break;
 			}
 			Settings.Default.ColorScheme = this.colorSchemeComboBox.SelectedIndex;
 		}
