@@ -13,9 +13,9 @@ A fractal screen saver that zooms in on the Mandelbrot set. Unlike most fractal 
 * .NET Framework 4.5
 
 ##Installation
-1. Download the screen saver from [here](http://steveniles.ca/mandelzoom/files/mzoom.scr) (right click and select "Save link as...")
-2. Put the file into your Windows folder (i.e. `C:\Windows\`)  
-Alternatively, you can put the file into any folder, right click on it, and select "Install"
+1. Download the screen saver from [here](http://steveniles.ca/mandelzoom/files/mzoom.zip) (right click and select "Save link as...")
+2. Unzip the file into your Windows folder (i.e. `C:\Windows\`)  
+Alternatively, you can unzip the file into any folder, right click on it, and select "Install"
 
 That's it! The screen saver should now show up in Control Panel.
 
