@@ -1,20 +1,20 @@
-﻿#MandelZoom
+#MandelZoom
 
 ##Description
 A fractal screen saver that zooms in on the Mandelbrot set. Unlike most fractal screen savers that animate continuously, this one does a periodic 'select and enhance!' style of zoom.
 
 ##Screenshots
-* [Silver Frost](http://steveniles.ca/mandelzoom/images/Silver%20Frost.png)  
-* [Neon Glow](http://steveniles.ca/mandelzoom/images/Neon%20Glow.png)  
-* [Solar Flare](http://steveniles.ca/mandelzoom/images/Solar%20Flare.png)
-* [Psychedelic](http://steveniles.ca/mandelzoom/images/Psychedelic.png)
+* [Silver Frost](http://www.steveniles.ca/mandelzoom/images/Silver%20Frost.png)  
+* [Neon Glow](http://www.steveniles.ca/mandelzoom/images/Neon%20Glow.png)  
+* [Solar Flare](http://www.steveniles.ca/mandelzoom/images/Solar%20Flare.png)
+* [Psychedelic](http://www.steveniles.ca/mandelzoom/images/Psychedelic.png)
 
 ##Requirements
 * Microsoft Windows (64-bit)  
 * .NET Framework 4.5
 
 ##Installation
-1. Download the screen saver from [here](http://steveniles.ca/mandelzoom/files/mzoom.zip) (right click and select "Save link as...")
+1. Download the screen saver from [here](http://www.steveniles.ca/mandelzoom/files/mzoom.zip) (right click and select "Save link as...")
 2. Unzip the file into your Windows folder (i.e. `C:\Windows\`)  
 Alternatively, you can unzip the file into any folder, right click on it, and select "Install"
 
