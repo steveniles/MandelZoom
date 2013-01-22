@@ -88,18 +88,18 @@
 			}
 			return rectangle;
 		}
-		internal static Rectangle? GetNextZoomRectangle(Bitmap currentBitmap)
+		internal static Rectangle GetNextZoomRectangle(Bitmap currentBitmap)
 		{
 			// Figure out where to zoom in next, in terms of pixel coords.
-			int zoomWidth = currentBitmap.Width / 10;
-			int zoomHeight = currentBitmap.Height / 10;
+			var zoomRectangle = new Rectangle(Point.Empty, new Size(currentBitmap.Width / 10, currentBitmap.Height / 10));
+			var searchArea = new Size(currentBitmap.Width - zoomRectangle.Width, currentBitmap.Height - zoomRectangle.Height);
 			// If can't find viable area to zoom in on after many attempts, don't zoom in, zoom back out to starting fractal.
 			for (int attempt = 0; attempt < 1000; attempt++)
 			{
-				var testRectangle = new Rectangle(Random.Next(currentBitmap.Width - zoomWidth), Random.Next(currentBitmap.Height - zoomHeight), zoomWidth, zoomHeight);
-				if (IsViableRegion(currentBitmap, testRectangle)) return testRectangle;
+				zoomRectangle.Location = new Point(Random.Next(searchArea.Width), Random.Next(searchArea.Height));
+				if (IsViableRegion(currentBitmap, zoomRectangle)) return zoomRectangle;
 			}
-			return null;
+			return Rectangle.Empty;
 		}
 		internal static RectangleD GetNextZoomArea(Size screenSize, Point zoomLocation, RectangleD currentArea)
 		{

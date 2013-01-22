@@ -191,16 +191,16 @@
 					var currentBitmap = this.initialFractalBitmap.Clone() as Bitmap;
 					for (int zoom = 1; zoom < 10; zoom++)
 					{
-						Rectangle? zoomRectangle = Mandelbrot.GetNextZoomRectangle(currentBitmap);
+						Rectangle zoomRectangle = Mandelbrot.GetNextZoomRectangle(currentBitmap);
 						// If couldn't find suitable area to zoom in, zoom out to starting fractal and start over.
-						if (!zoomRectangle.HasValue) break;
-						fractalArea = Mandelbrot.GetNextZoomArea(this.Size, zoomRectangle.Value.Location, fractalArea);
+						if (zoomRectangle == Rectangle.Empty) break;
+						fractalArea = Mandelbrot.GetNextZoomArea(this.Size, zoomRectangle.Location, fractalArea);
 						Bitmap nextBitmap = Mandelbrot.RenderFractal(this.Size, fractalArea, BaseMaximumIterations * (zoom + 1), this.colorFunction);
-						IntPtr[] nativeZoomInBitmapHandles = CreateNativeZoomInBitmaps(currentBitmap, nextBitmap, zoomRectangle.Value.Location);
+						IntPtr[] nativeZoomInBitmapHandles = CreateNativeZoomInBitmaps(currentBitmap, nextBitmap, zoomRectangle.Location);
 						// Wait a bit between zooms, even if all computations are complete.
 						this.stopwatch.Stop();
 						if (this.stopwatch.ElapsedMilliseconds < WaitMilliseconds) Thread.Sleep(WaitMilliseconds - (int)this.stopwatch.ElapsedMilliseconds);
-						AnimateBlink(formGraphics, currentBitmap, zoomRectangle.Value);
+						AnimateBlink(formGraphics, currentBitmap, zoomRectangle);
 						AnimateZoomIn(formGraphics, nativeZoomInBitmapHandles, this.Size);
 						this.stopwatch.Restart();
 						// Clean up animation bitmaps after use.
