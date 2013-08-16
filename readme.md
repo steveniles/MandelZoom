@@ -1,7 +1,8 @@
 #MandelZoom
 
 ##Description
-A fractal screen saver that zooms in on the Mandelbrot set. Unlike most fractal screen savers that animate continuously, this one does a periodic 'select and enhance!' style of zoom.
+A fractal screen saver that zooms in on the Mandelbrot set.  
+Unlike most fractal screen savers that animate continuously, this one does a periodic 'select and enhance!' style of zoom.
 
 ##Screenshots
 * [Silver Frost](http://www.steveniles.ca/mandelzoom/images/SilverFrost.jpg)  
@@ -13,7 +14,7 @@ A fractal screen saver that zooms in on the Mandelbrot set. Unlike most fractal 
 * Microsoft Windows (64-bit)  
 * .NET Framework 4.5
 
-If your computer doesn't have .NET Framework 4.5 installed (most up-to-date systems will), you can download and install it from [here](http://www.microsoft.com/en-us/download/details.aspx?id=30653).
+If your computer doesn't have .NET Framework 4.5 installed (most up-to-date systems already do), you can download and install it from [here](http://www.microsoft.com/en-us/download/details.aspx?id=30653).
 
 ##Installation
 1. Download the screen saver from [here](http://www.steveniles.ca/mandelzoom/files/mzoom.zip) (right click and select "Save link as...")
