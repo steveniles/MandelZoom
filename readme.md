@@ -23,7 +23,7 @@ Alternatively, you can unzip the file into any folder, right click on it, and se
 
 That's it! The screen saver should now show up in Control Panel.
 
-##Source Code & Technical Details [![Build status](https://ci.appveyor.com/api/projects/status?id=yyc3jn5oog5us0i7)](https://ci.appveyor.com/project/MandelZoom)
+##Source Code & Technical Details [![Build status](https://ci.appveyor.com/api/projects/status/yyc3jn5oog5us0i7)](https://ci.appveyor.com/project/steveniles/MandelZoom)
 The source code for this screen saver is available to view [here](https://github.com/steveniles/MandelZoom).  
 There is a wiki describing technical details for screen savers [here](https://github.com/steveniles/MandelZoom/wiki).
 
