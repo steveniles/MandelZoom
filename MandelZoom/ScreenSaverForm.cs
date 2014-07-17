@@ -15,7 +15,6 @@
         private const int WaitMilliseconds = 15000;
         private static readonly Random Random = new Random();
 
-        private readonly bool isMiniPreview;
         private readonly Stopwatch stopwatch = new Stopwatch();
 
         private Func<int, double, Color> colorFunction;
@@ -25,16 +24,14 @@
 
         #region Init
 
-        internal ScreenSaverForm(bool isMiniPreview)
+        internal ScreenSaverForm()
         {
             this.InitializeComponent();
-            this.isMiniPreview = isMiniPreview;
         }
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)
         {
             this.AssignColorScheme();
-            this.AssignOpacity();
             this.initialFractalArea = Mandelbrot.GetInitialArea(this.Size);
             this.initialFractalBitmap = Mandelbrot.RenderInitialFractal(this.Size, this.initialFractalArea, BaseMaximumIterations, this.colorFunction);
         }
@@ -218,12 +215,9 @@
 
         #endregion Bitmap Functions
 
-        #region Config Methods
-
         private void AssignColorScheme()
         {
-            int colorScheme = Settings.Default.RandomColorScheme ? Random.Next(4) : Settings.Default.ColorScheme;
-            switch (colorScheme)
+            switch (Settings.Default.RandomColorScheme ? Random.Next(4) : Settings.Default.ColorScheme)
             {
                 default:
                     this.colorFunction = Mandelbrot.SilverFrostColorFunction;
@@ -242,16 +236,5 @@
                     break;
             }
         }
-
-        private void AssignOpacity()
-        {
-            // Don't use transparency when displaying as mini-preview in Control Panel, errors will ensue.
-            if (this.isMiniPreview) return;
-            double opacity = Settings.Default.RandomOpacity ? (Random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D;
-            if (opacity > 1D) opacity = 1D;
-            this.Opacity = opacity;
-        }
-
-        #endregion Config Methods
     }
 }

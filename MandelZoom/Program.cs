@@ -55,7 +55,7 @@
             Rectangle parentBounds;
             if (long.TryParse(parent, out parentHandle) && NativeMethods.GetClientRect((IntPtr)parentHandle, out parentBounds))
             {
-                var previewForm = new ScreenSaverForm(true)
+                var previewForm = new ScreenSaverForm()
                 {
                     FormBorderStyle = FormBorderStyle.None,
                     BackColor = Color.Black,
@@ -83,9 +83,8 @@
             if (Settings.Default.SpanScreens)
             {
                 // One form that covers all monitors.
-                screenSaverForms.Add(new ScreenSaverForm(false));
-                screenSaverForms[0].FormBorderStyle = FormBorderStyle.None;
-                screenSaverForms[0].Bounds = Screen.PrimaryScreen.Bounds;
+                screenSaverForms.Add(new ScreenSaverForm() { FormBorderStyle = FormBorderStyle.None, Bounds = Screen.PrimaryScreen.Bounds });
+
                 foreach (var screen in Screen.AllScreens)
                 {
                     screenSaverForms[0].Bounds = Rectangle.Union(screenSaverForms[0].Bounds, screen.Bounds);
@@ -96,11 +95,10 @@
                 foreach (var screen in Screen.AllScreens)
                 {
                     // One form per monitor.
-                    screenSaverForms.Add(new ScreenSaverForm(false));
-                    screenSaverForms[screenSaverForms.Count - 1].FormBorderStyle = FormBorderStyle.None;
-                    screenSaverForms[screenSaverForms.Count - 1].Bounds = screen.Bounds;
+                    screenSaverForms.Add(new ScreenSaverForm() { FormBorderStyle = FormBorderStyle.None, Bounds = screen.Bounds });
                 }
             }
+            var random = new Random();
             foreach (ScreenSaverForm screenSaverForm in screenSaverForms)
             {
                 screenSaverForm.StartPosition = FormStartPosition.Manual;
@@ -112,9 +110,14 @@
                 screenSaverForm.ShowInTaskbar = false;
                 screenSaverForm.SizeGripStyle = SizeGripStyle.Hide;
                 screenSaverForm.TopMost = true;
-                screenSaverForm.KeyDown += ScreenSaverForm_KeyDown;
-                screenSaverForm.MouseDown += ScreenSaverForm_MouseDown;
-                screenSaverForm.MouseMove += ScreenSaverForm_MouseMove;
+                screenSaverForm.Opacity = Settings.Default.RandomOpacity ? (random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D;
+                screenSaverForm.KeyDown += (sender, e) => ShutDownScreenSaver();
+                screenSaverForm.MouseDown += (sender, e) => ShutDownScreenSaver();
+                screenSaverForm.MouseMove += (sender, e) =>
+                {
+                    // Don't end the screen saver if the mouse only moved a tiny bit
+                    if (mousePosition != Point.Empty && (e.X - mousePosition.X > 5 || e.X - mousePosition.X < -5 || e.Y - mousePosition.Y > 5 || e.Y - mousePosition.Y < -5)) ShutDownScreenSaver(); else mousePosition = e.Location;
+                };
                 screenSaverForm.Show();
             }
             Cursor.Hide();
@@ -122,27 +125,6 @@
         }
 
         #endregion ScreenSaver Methods
-
-        #region Input Events
-
-        private static void ScreenSaverForm_KeyDown(object sender, KeyEventArgs e)
-        {
-            ShutDownScreenSaver();
-        }
-
-        private static void ScreenSaverForm_MouseDown(object sender, MouseEventArgs e)
-        {
-            ShutDownScreenSaver();
-        }
-
-        private static void ScreenSaverForm_MouseMove(object sender, MouseEventArgs e)
-        {
-            // Don't end the screen saver if the mouse only moved a tiny bit
-            if (mousePosition != Point.Empty && (e.X - mousePosition.X > 5 || e.X - mousePosition.X < -5 || e.Y - mousePosition.Y > 5 || e.Y - mousePosition.Y < -5)) ShutDownScreenSaver();
-            else mousePosition = e.Location;
-        }
-
-        #endregion Input Events
 
         private static void ShutDownScreenSaver()
         {
