@@ -1,5 +1,6 @@
 ﻿namespace MandelZoom
 {
+    using System;
     using System.ComponentModel;
     using System.Diagnostics;
     using System.Drawing;
@@ -15,7 +16,7 @@
             this.InitializeComponent();
         }
 
-        private void SettingsForm_Load(object sender, System.EventArgs e)
+        private void SettingsForm_Load(object sender, EventArgs e)
         {
             this.colorSchemeComboBox.SelectedIndex = Settings.Default.ColorScheme;
             this.colorSchemeRandomizeCheckBox.Checked = Settings.Default.RandomColorScheme;
@@ -28,7 +29,7 @@
 
         #region Settings
 
-        private void ColorSchemeComboBox_SelectedIndexChanged(object sender, System.EventArgs e)
+        private void ColorSchemeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             switch (this.colorSchemeComboBox.SelectedIndex)
             {
@@ -59,28 +60,27 @@
             Settings.Default.ColorScheme = this.colorSchemeComboBox.SelectedIndex;
         }
 
-        private void ColorSchemeRandomizeCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void ColorSchemeRandomizeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.colorSchemeComboBox.Enabled = !this.colorSchemeRandomizeCheckBox.Checked;
             Settings.Default.RandomColorScheme = this.colorSchemeRandomizeCheckBox.Checked;
         }
 
-        private void OpacityRandomizeCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void OpacityRandomizeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             this.opacityTrackBar.Enabled = !this.opacityRandomizeCheckBox.Checked;
-            if (this.opacityRandomizeCheckBox.Checked) this.Opacity = 1;
-            else this.Opacity = this.opacityTrackBar.Value / 100D;
+            this.Opacity = this.opacityRandomizeCheckBox.Checked ? 1 : this.opacityTrackBar.Value / 100D;
             Settings.Default.RandomOpacity = this.opacityRandomizeCheckBox.Checked;
         }
 
-        private void OpacityTrackBar_ValueChanged(object sender, System.EventArgs e)
+        private void OpacityTrackBar_ValueChanged(object sender, EventArgs e)
         {
-            this.opacityGroupBox.Text = "Opacity: " + this.opacityTrackBar.Value + "%";
+            this.opacityGroupBox.Text = String.Format("Opacity: {0}%", this.opacityTrackBar.Value);
             if (!this.opacityRandomizeCheckBox.Checked) this.Opacity = this.opacityTrackBar.Value / 100D;
             Settings.Default.OpacityPercent = this.opacityTrackBar.Value;
         }
 
-        private void SpanScreensCheckBox_CheckedChanged(object sender, System.EventArgs e)
+        private void SpanScreensCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             Settings.Default.SpanScreens = this.spanScreensCheckBox.Checked;
         }
@@ -89,7 +89,7 @@
 
         #region Buttons
 
-        private void CancelButton_Click(object sender, System.EventArgs e)
+        private void CancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
         }
@@ -106,7 +106,7 @@
             }
         }
 
-        private void OkButton_Click(object sender, System.EventArgs e)
+        private void OkButton_Click(object sender, EventArgs e)
         {
             Settings.Default.Save();
             this.Close();

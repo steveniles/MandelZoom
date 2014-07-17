@@ -222,8 +222,7 @@
 
         private void AssignColorScheme()
         {
-            int colorScheme = Settings.Default.ColorScheme;
-            if (Settings.Default.RandomColorScheme) colorScheme = Random.Next(4);
+            int colorScheme = Settings.Default.RandomColorScheme ? Random.Next(4) : Settings.Default.ColorScheme;
             switch (colorScheme)
             {
                 default:
@@ -248,8 +247,7 @@
         {
             // Don't use transparency when displaying as mini-preview in Control Panel, errors will ensue.
             if (this.isMiniPreview) return;
-            double opacity = Settings.Default.OpacityPercent / 100D;
-            if (Settings.Default.RandomOpacity) opacity = (Random.NextDouble() * 0.75D) + 0.25D;
+            double opacity = Settings.Default.RandomOpacity ? (Random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D;
             if (opacity > 1D) opacity = 1D;
             this.Opacity = opacity;
         }
