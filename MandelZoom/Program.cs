@@ -19,35 +19,20 @@
             else if (args.Length == 1 && args[0].Equals("/s", StringComparison.OrdinalIgnoreCase)) RunScreenSaver();
         }
 
-        #region Config Methods
-
-        private static void RunConfig()
-        {
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            var settingsForm = new SettingsForm();
-            settingsForm.ShowDialog();
-            settingsForm.Dispose();
-        }
-
-        private static void RunConfig(string owner)
+        private static void RunConfig(string owner = null)
         {
             long ownerHandle;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var settingsForm = new SettingsForm();
             // Try to set the control panel window as the owner of this settings window.
-            if (long.TryParse(owner, out ownerHandle))
+            if (owner != null && long.TryParse(owner, out ownerHandle))
             {
                 NativeMethods.SetWindowLongPtr(settingsForm.Handle, NativeMethods.GWLP_HWNDPARENT, ownerHandle);
             }
             settingsForm.ShowDialog();
             settingsForm.Dispose();
         }
-
-        #endregion Config Methods
-
-        #region ScreenSaver Methods
 
         private static void RunPreview(string parent)
         {
@@ -123,8 +108,6 @@
             Cursor.Hide();
             Application.Run();
         }
-
-        #endregion ScreenSaver Methods
 
         private static void ShutDownScreenSaver()
         {
