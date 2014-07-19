@@ -28,19 +28,22 @@
         [DllImport("user32.dll", EntryPoint = "SetParent")]
         internal static extern long SetParent(IntPtr childHandle, IntPtr newParentHandle);
 
-        [DllImport("gdi32.dll", EntryPoint = "BitBlt")]
-        public static extern bool BitBlt([In] IntPtr hdcDest, [In] int nXDest, [In]int nYDest, [In]int nWidth, [In] int nHeight, [In] IntPtr hdcSrc, [In] int nXSrc, [In]int nYSrc, [In] uint dwRop);
+        internal static class GDI32
+        {
+            [DllImport("gdi32.dll", EntryPoint = "BitBlt")]
+            internal static extern bool BitBlt([In] IntPtr hdcDest, [In] int nXDest, [In]int nYDest, [In]int nWidth, [In] int nHeight, [In] IntPtr hdcSrc, [In] int nXSrc, [In]int nYSrc, [In] uint dwRop);
 
-        [DllImport("gdi32.dll", EntryPoint = "CreateCompatibleDC")]
-        public static extern IntPtr CreateCompatibleDC([In] IntPtr hdc);
+            [DllImport("gdi32.dll", EntryPoint = "CreateCompatibleDC")]
+            internal static extern IntPtr CreateCompatibleDC([In] IntPtr hdc);
 
-        [DllImport("gdi32.dll", EntryPoint = "SelectObject")]
-        public static extern IntPtr SelectObject([In] IntPtr hdc, [In] IntPtr hgdiobj);
+            [DllImport("gdi32.dll", EntryPoint = "DeleteDC")]
+            internal static extern bool DeleteDC([In] IntPtr hdc);
 
-        [DllImport("gdi32.dll", EntryPoint = "DeleteDC")]
-        public static extern bool DeleteDC([In] IntPtr hdc);
+            [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
+            internal static extern bool DeleteObject([In] IntPtr hObject);
 
-        [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
-        public static extern bool DeleteObject([In] IntPtr hObject);
+            [DllImport("gdi32.dll", EntryPoint = "SelectObject")]
+            internal static extern IntPtr SelectObject([In] IntPtr hdc, [In] IntPtr hgdiobj);
+        }
     }
 }

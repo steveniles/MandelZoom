@@ -65,7 +65,7 @@
                         // Clean up animation bitmaps after use.
                         foreach (IntPtr nativeZoomInBitmapHandle in nativeZoomInBitmapHandles)
                         {
-                            NativeMethods.DeleteObject(nativeZoomInBitmapHandle);
+                            NativeMethods.GDI32.DeleteObject(nativeZoomInBitmapHandle);
                         }
                         currentBitmap.Dispose();
                         currentBitmap = nextBitmap;
@@ -84,7 +84,7 @@
                     // Clean up animation bitmaps after use.
                     foreach (IntPtr nativeZoomOutBitmapHandle in nativeZoomOutBitmapHandles)
                     {
-                        NativeMethods.DeleteObject(nativeZoomOutBitmapHandle);
+                        NativeMethods.GDI32.DeleteObject(nativeZoomOutBitmapHandle);
                     }
                 }
             };
@@ -114,25 +114,25 @@
         {
             // Create device contexts.
             IntPtr targetDC = formGraphics.GetHdc();
-            IntPtr sourceDC = NativeMethods.CreateCompatibleDC(targetDC);
+            IntPtr sourceDC = NativeMethods.GDI32.CreateCompatibleDC(targetDC);
 
             // Capture sourceDC's original empty HBitmap and select first frame for drawing.
-            IntPtr emptyNativeBitmapHandle = NativeMethods.SelectObject(sourceDC, nativeBitmapHandles[0]);
+            IntPtr emptyNativeBitmapHandle = NativeMethods.GDI32.SelectObject(sourceDC, nativeBitmapHandles[0]);
 
             // Draw animation frames to form.
             for (int c = 1; c < 90; c++)
             {
-                NativeMethods.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, NativeMethods.SRCCOPY);
-                NativeMethods.SelectObject(sourceDC, nativeBitmapHandles[c]);
+                NativeMethods.GDI32.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, NativeMethods.SRCCOPY);
+                NativeMethods.GDI32.SelectObject(sourceDC, nativeBitmapHandles[c]);
                 Thread.Sleep(5);
             }
 
             // Draw final frame.
-            NativeMethods.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, NativeMethods.SRCCOPY);
+            NativeMethods.GDI32.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, NativeMethods.SRCCOPY);
 
             // Clean up.
-            NativeMethods.SelectObject(sourceDC, emptyNativeBitmapHandle);
-            NativeMethods.DeleteDC(sourceDC);
+            NativeMethods.GDI32.SelectObject(sourceDC, emptyNativeBitmapHandle);
+            NativeMethods.GDI32.DeleteDC(sourceDC);
             formGraphics.ReleaseHdc(targetDC);
         }
 
@@ -140,25 +140,25 @@
         {
             // Create device contexts.
             IntPtr targetDC = formGraphics.GetHdc();
-            IntPtr sourceDC = NativeMethods.CreateCompatibleDC(targetDC);
+            IntPtr sourceDC = NativeMethods.GDI32.CreateCompatibleDC(targetDC);
 
             // Capture sourceDC's original empty HBitmap and select first frame for drawing.
-            IntPtr emptyNativeBitmapHandle = NativeMethods.SelectObject(sourceDC, nativeBitmapHandles[99]);
+            IntPtr emptyNativeBitmapHandle = NativeMethods.GDI32.SelectObject(sourceDC, nativeBitmapHandles[99]);
 
             // Draw animation frames to form (index's in reverse order because they were drawn in reverse order in CreateNativeZoomOutBitmaps()).
             for (int c = 99; c >= 0; c--)
             {
-                NativeMethods.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, 0x00CC0020);
-                NativeMethods.SelectObject(sourceDC, nativeBitmapHandles[c]);
+                NativeMethods.GDI32.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, 0x00CC0020);
+                NativeMethods.GDI32.SelectObject(sourceDC, nativeBitmapHandles[c]);
                 Thread.Sleep(5);
             }
 
             // Draw final frame.
-            NativeMethods.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, 0x00CC0020);
+            NativeMethods.GDI32.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, 0x00CC0020);
 
             // Clean up.
-            NativeMethods.SelectObject(sourceDC, emptyNativeBitmapHandle);
-            NativeMethods.DeleteDC(sourceDC);
+            NativeMethods.GDI32.SelectObject(sourceDC, emptyNativeBitmapHandle);
+            NativeMethods.GDI32.DeleteDC(sourceDC);
             formGraphics.ReleaseHdc(targetDC);
         }
 
