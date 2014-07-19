@@ -10,9 +10,9 @@
 
         internal const int GWLP_HWNDPARENT = -8; // flag for setting a window's owner (not actually parent)
         internal const int GWL_STYLE = -16; // flag for setting a window's style
-        internal const long WS_CHILD = 0x40000000L; // flag for setting a window as a child
-        internal const long WS_POPUP = 0x80000000L; // flag for setting a window as a popup
-        internal const uint SRCCOPY = 0x00CC0020U; // flag for copying a source rectangle directly to a destination rectangle
+        internal const long WS_CHILD = 0x40000000; // flag for setting a window as a child
+        internal const long WS_POPUP = 0x80000000; // flag for setting a window as a popup
+        internal const uint SRCCOPY = 0xCC0020; // flag for copying a source rectangle directly to a destination rectangle
 
         // This method only exists on 64bit systems.
         [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
@@ -29,18 +29,18 @@
         internal static extern long SetParent(IntPtr childHandle, IntPtr newParentHandle);
 
         [DllImport("gdi32.dll", EntryPoint = "BitBlt")]
-        internal static extern bool BitBlt(IntPtr targetDC, int targetX, int targetY, int width, int height, IntPtr sourceDC, int sourceX, int sourceY, uint rasterOpCode);
+        public static extern bool BitBlt([In] IntPtr hdcDest, [In] int nXDest, [In]int nYDest, [In]int nWidth, [In] int nHeight, [In] IntPtr hdcSrc, [In] int nXSrc, [In]int nYSrc, [In] uint dwRop);
 
         [DllImport("gdi32.dll", EntryPoint = "CreateCompatibleDC")]
-        internal static extern IntPtr CreateCompatibleDC(IntPtr DCHandle);
+        public static extern IntPtr CreateCompatibleDC([In] IntPtr hdc);
 
         [DllImport("gdi32.dll", EntryPoint = "SelectObject")]
-        internal static extern IntPtr SelectObject(IntPtr DCHandle, IntPtr objectHandle);
+        public static extern IntPtr SelectObject([In] IntPtr hdc, [In] IntPtr hgdiobj);
 
         [DllImport("gdi32.dll", EntryPoint = "DeleteDC")]
-        internal static extern IntPtr DeleteDC(IntPtr DCHandle);
+        public static extern bool DeleteDC([In] IntPtr hdc);
 
         [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
-        internal static extern IntPtr DeleteObject(IntPtr objectHandle);
+        public static extern bool DeleteObject([In] IntPtr hObject);
     }
 }
