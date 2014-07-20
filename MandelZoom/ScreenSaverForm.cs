@@ -27,6 +27,10 @@
         internal ScreenSaverForm()
         {
             this.InitializeComponent();
+
+            FormBorderStyle = FormBorderStyle.None;
+            BackColor = Color.Black;
+            ShowInTaskbar = false;
         }
 
         private void ScreenSaverForm_Load(object sender, EventArgs e)

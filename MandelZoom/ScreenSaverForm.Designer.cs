@@ -28,27 +28,18 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.SuspendLayout();
-			// 
-			// ScreenSaverForm
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(800, 600);
-			this.ControlBox = false;
-			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-			this.MaximizeBox = false;
-			this.MinimizeBox = false;
-			this.Name = "ScreenSaverForm";
-			this.ShowIcon = false;
-			this.ShowInTaskbar = false;
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
-			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "MandelZoom";
-			this.Load += new System.EventHandler(this.ScreenSaverForm_Load);
-			this.Shown += new System.EventHandler(this.ScreenSaverForm_Shown);
-			this.ResumeLayout(false);
+            this.SuspendLayout();
+            // 
+            // ScreenSaverForm
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Name = "ScreenSaverForm";
+            this.Text = "MandelZoom";
+            this.Load += new System.EventHandler(this.ScreenSaverForm_Load);
+            this.Shown += new System.EventHandler(this.ScreenSaverForm_Shown);
+            this.ResumeLayout(false);
 
 		}
 

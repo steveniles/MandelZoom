@@ -40,17 +40,7 @@
             Rectangle parentBounds;
             if (long.TryParse(parent, out parentHandle) && NativeMethods.USER32.GetClientRect((IntPtr)parentHandle, out parentBounds))
             {
-                var previewForm = new ScreenSaverForm()
-                {
-                    FormBorderStyle = FormBorderStyle.None,
-                    BackColor = Color.Black,
-                    ControlBox = false,
-                    MaximizeBox = false,
-                    MinimizeBox = false,
-                    ShowIcon = false,
-                    ShowInTaskbar = false,
-                    SizeGripStyle = SizeGripStyle.Hide
-                };
+                var previewForm = new ScreenSaverForm();
                 // Get current window style, add child flag, remove popup flag, and set as new window style.
                 long newStyle = NativeMethods.USER32.GetWindowLongPtr(previewForm.Handle, NativeMethods.GWL_STYLE);
                 if (newStyle == 0) return;
@@ -68,7 +58,7 @@
             if (Settings.Default.SpanScreens)
             {
                 // One form that covers all monitors.
-                screenSaverForms.Add(new ScreenSaverForm() { FormBorderStyle = FormBorderStyle.None, Bounds = Screen.PrimaryScreen.Bounds });
+                screenSaverForms.Add(new ScreenSaverForm() { Bounds = Screen.PrimaryScreen.Bounds });
 
                 foreach (var screen in Screen.AllScreens)
                 {
@@ -80,22 +70,16 @@
                 foreach (var screen in Screen.AllScreens)
                 {
                     // One form per monitor.
-                    screenSaverForms.Add(new ScreenSaverForm() { FormBorderStyle = FormBorderStyle.None, Bounds = screen.Bounds });
+                    screenSaverForms.Add(new ScreenSaverForm() { Bounds = screen.Bounds });
                 }
             }
             var random = new Random();
             foreach (ScreenSaverForm screenSaverForm in screenSaverForms)
             {
                 screenSaverForm.StartPosition = FormStartPosition.Manual;
-                screenSaverForm.BackColor = Color.Black;
-                screenSaverForm.ControlBox = false;
-                screenSaverForm.MaximizeBox = false;
-                screenSaverForm.MinimizeBox = false;
-                screenSaverForm.ShowIcon = false;
-                screenSaverForm.ShowInTaskbar = false;
-                screenSaverForm.SizeGripStyle = SizeGripStyle.Hide;
                 screenSaverForm.TopMost = true;
                 screenSaverForm.Opacity = Settings.Default.RandomOpacity ? (random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D;
+                screenSaverForm.Opacity = 0.5;
                 screenSaverForm.KeyDown += (sender, e) => ShutDownScreenSaver();
                 screenSaverForm.MouseDown += (sender, e) => ShutDownScreenSaver();
                 screenSaverForm.MouseMove += (sender, e) =>
