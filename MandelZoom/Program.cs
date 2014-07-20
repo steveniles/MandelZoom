@@ -79,7 +79,6 @@
                 screenSaverForm.StartPosition = FormStartPosition.Manual;
                 screenSaverForm.TopMost = true;
                 screenSaverForm.Opacity = Settings.Default.RandomOpacity ? (random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D;
-                screenSaverForm.Opacity = 0.5;
                 screenSaverForm.KeyDown += (sender, e) => ShutDownScreenSaver();
                 screenSaverForm.MouseDown += (sender, e) => ShutDownScreenSaver();
                 screenSaverForm.MouseMove += (sender, e) =>
