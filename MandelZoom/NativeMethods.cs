@@ -12,7 +12,7 @@
         private const int GWL_STYLE = -16; // flag for setting a window's style
         private const long WS_CHILD = 0x40000000; // flag for setting a window as a child
         private const long WS_POPUP = 0x80000000; // flag for setting a window as a popup
-        internal const uint SRCCOPY = 0xCC0020; // flag for copying a source rectangle directly to a destination rectangle
+        private const uint SRCCOPY = 0xCC0020; // flag for copying a source rectangle directly to a destination rectangle
 
         internal static void SetFormOwner(Form form, IntPtr ownerHandle)
         {
@@ -34,6 +34,11 @@
             if (!NativeMethods.USER32.GetClientRect(parentHandle, out parentBounds)) return false;
             form.Bounds = parentBounds;
             return true;
+        }
+
+        internal static bool BitBlockTransfer(IntPtr targetDC, int targetX, int targetY, int width, int height, IntPtr sourceDC, int sourceX, int sourceY)
+        {
+            return NativeMethods.GDI32.BitBlt(targetDC, targetX, targetY, width, height, sourceDC, sourceX, sourceY, NativeMethods.SRCCOPY);
         }
 
         internal static class USER32

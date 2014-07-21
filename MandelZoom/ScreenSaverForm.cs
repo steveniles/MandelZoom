@@ -126,13 +126,13 @@
             // Draw animation frames to form.
             for (int c = 1; c < 90; c++)
             {
-                NativeMethods.GDI32.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, NativeMethods.SRCCOPY);
+                NativeMethods.BitBlockTransfer(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0);
                 NativeMethods.GDI32.SelectObject(sourceDC, nativeBitmapHandles[c]);
                 Thread.Sleep(5);
             }
 
             // Draw final frame.
-            NativeMethods.GDI32.BitBlt(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0, NativeMethods.SRCCOPY);
+            NativeMethods.BitBlockTransfer(targetDC, 0, 0, size.Width, size.Height, sourceDC, 0, 0);
 
             // Clean up.
             NativeMethods.GDI32.SelectObject(sourceDC, emptyNativeBitmapHandle);
