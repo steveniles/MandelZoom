@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Drawing;
+    using System.Linq;
     using System.Windows.Forms;
     using Properties;
 
@@ -54,31 +55,26 @@
 
         private static void RunScreenSaver()
         {
-            var screenSaverForms = new List<ScreenSaverForm>();
+            IEnumerable<Rectangle> screenAreas;
             if (Settings.Default.SpanScreens)
             {
-                // One form that covers all monitors.
-                screenSaverForms.Add(new ScreenSaverForm() { Bounds = Screen.PrimaryScreen.Bounds });
-
-                foreach (var screen in Screen.AllScreens)
-                {
-                    screenSaverForms[0].Bounds = Rectangle.Union(screenSaverForms[0].Bounds, screen.Bounds);
-                }
+                screenAreas = new List<Rectangle>(1) { Screen.AllScreens.Select(s => s.Bounds).Aggregate((a, b) => Rectangle.Union(a, b)) };
             }
             else
             {
-                foreach (var screen in Screen.AllScreens)
-                {
-                    // One form per monitor.
-                    screenSaverForms.Add(new ScreenSaverForm() { Bounds = screen.Bounds });
-                }
+                screenAreas = Screen.AllScreens.Select(s => s.Bounds);
             }
+
             var random = new Random();
-            foreach (ScreenSaverForm screenSaverForm in screenSaverForms)
+            foreach (var area in screenAreas)
             {
-                screenSaverForm.StartPosition = FormStartPosition.Manual;
-                screenSaverForm.TopMost = true;
-                screenSaverForm.Opacity = Settings.Default.RandomOpacity ? (random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D;
+                var screenSaverForm = new ScreenSaverForm()
+                {
+                    Bounds = area,
+                    StartPosition = FormStartPosition.Manual,
+                    TopMost = true,
+                    Opacity = Settings.Default.RandomOpacity ? (random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D
+                };
                 screenSaverForm.KeyDown += (sender, e) => ShutDownScreenSaver();
                 screenSaverForm.MouseDown += (sender, e) => ShutDownScreenSaver();
                 screenSaverForm.MouseMove += (sender, e) =>
