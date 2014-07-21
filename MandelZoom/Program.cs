@@ -22,14 +22,13 @@
 
         private static void RunConfig(string owner = null)
         {
-            long ownerHandle;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             var settingsForm = new SettingsForm();
-            // Try to set the control panel window as the owner of this settings window.
+            long ownerHandle;
             if (owner != null && long.TryParse(owner, out ownerHandle))
             {
-                NativeMethods.USER32.SetWindowLongPtr(settingsForm.Handle, NativeMethods.GWLP_HWNDPARENT, ownerHandle);
+                NativeMethods.SetFormOwner(settingsForm, (IntPtr)ownerHandle);
             }
             settingsForm.ShowDialog();
             settingsForm.Dispose();
@@ -38,16 +37,11 @@
         private static void RunPreview(string parent)
         {
             long parentHandle;
-            Rectangle parentBounds;
-            if (long.TryParse(parent, out parentHandle) && NativeMethods.USER32.GetClientRect((IntPtr)parentHandle, out parentBounds))
+            if (long.TryParse(parent, out parentHandle))
             {
                 var previewForm = new ScreenSaverForm();
-                // Get current window style, add child flag, remove popup flag, and set as new window style.
-                long newStyle = NativeMethods.USER32.GetWindowLongPtr(previewForm.Handle, NativeMethods.GWL_STYLE);
-                if (newStyle == 0) return;
-                newStyle = (newStyle | NativeMethods.WS_CHILD) & ~NativeMethods.WS_POPUP;
-                if (NativeMethods.USER32.SetWindowLongPtr(previewForm.Handle, NativeMethods.GWL_STYLE, newStyle) == 0) return;
-                previewForm.Bounds = parentBounds;
+                if (!NativeMethods.TrySetFormChildWindowStyle(previewForm)) return;
+                if (!NativeMethods.TrySetFormBoundsToMatchParent(previewForm, (IntPtr)parentHandle)) return;
                 NativeMethods.USER32.SetParent(previewForm.Handle, (IntPtr)parentHandle);
                 Application.Run(previewForm);
             }
