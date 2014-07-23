@@ -49,22 +49,16 @@
 
         private static void RunScreenSaver()
         {
-            IEnumerable<Rectangle> screenAreas;
-            if (Settings.Default.SpanScreens)
-            {
-                screenAreas = new List<Rectangle>(1) { Screen.AllScreens.Select(s => s.Bounds).Aggregate((a, b) => Rectangle.Union(a, b)) };
-            }
-            else
-            {
-                screenAreas = Screen.AllScreens.Select(s => s.Bounds);
-            }
-
             var random = new Random();
-            foreach (var area in screenAreas)
+            var viewports = Settings.Default.SpanScreens
+                ? new List<Rectangle>(1) { Screen.AllScreens.Select(s => s.Bounds).Aggregate((a, b) => Rectangle.Union(a, b)) }
+                : Screen.AllScreens.Select(s => s.Bounds);
+
+            foreach (var view in viewports)
             {
                 var screenSaverForm = new ScreenSaverForm()
                 {
-                    Bounds = area,
+                    Bounds = view,
                     StartPosition = FormStartPosition.Manual,
                     TopMost = true,
                     Opacity = Settings.Default.RandomOpacity ? (random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D
