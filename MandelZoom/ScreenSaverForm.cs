@@ -28,6 +28,7 @@
         {
             this.InitializeComponent();
 
+            StartPosition = FormStartPosition.Manual;
             FormBorderStyle = FormBorderStyle.None;
             BackColor = Color.Black;
             ShowInTaskbar = false;

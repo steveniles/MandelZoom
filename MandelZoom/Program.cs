@@ -59,7 +59,6 @@
                 var screenSaverForm = new ScreenSaverForm()
                 {
                     Bounds = view,
-                    StartPosition = FormStartPosition.Manual,
                     TopMost = true,
                     Opacity = Settings.Default.RandomOpacity ? (random.NextDouble() * 0.75D) + 0.25D : Settings.Default.OpacityPercent / 100D
                 };
