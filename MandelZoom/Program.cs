@@ -37,26 +37,24 @@
         private static void RunPreview(string parent)
         {
             long parentHandle;
-            if (long.TryParse(parent, out parentHandle))
-            {
-                var previewForm = new ScreenSaverForm();
-                if (!NativeMethods.TrySetFormChildWindowStyle(previewForm)) return;
-                if (!NativeMethods.TrySetFormBoundsToMatchParent(previewForm, (IntPtr)parentHandle)) return;
-                NativeMethods.USER32.SetParent(previewForm.Handle, (IntPtr)parentHandle);
-                Application.Run(previewForm);
-            }
+            if (!long.TryParse(parent, out parentHandle)) return;
+            var previewForm = new ScreenSaverForm();
+            if (!NativeMethods.TrySetFormChildWindowStyle(previewForm)) return;
+            if (!NativeMethods.TrySetFormBoundsToMatchParent(previewForm, (IntPtr)parentHandle)) return;
+            NativeMethods.USER32.SetParent(previewForm.Handle, (IntPtr)parentHandle);
+            Application.Run(previewForm);
         }
 
         private static void RunScreenSaver()
         {
             var random = new Random();
             var viewports = Settings.Default.SpanScreens
-                ? new List<Rectangle>(1) { Screen.AllScreens.Select(s => s.Bounds).Aggregate((a, b) => Rectangle.Union(a, b)) }
+                ? new List<Rectangle> { Screen.AllScreens.Select(s => s.Bounds).Aggregate(Rectangle.Union) }
                 : Screen.AllScreens.Select(s => s.Bounds);
 
             foreach (var view in viewports)
             {
-                var screenSaverForm = new ScreenSaverForm()
+                var screenSaverForm = new ScreenSaverForm
                 {
                     Bounds = view,
                     TopMost = true,

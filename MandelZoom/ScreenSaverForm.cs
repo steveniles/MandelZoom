@@ -1,11 +1,11 @@
 ﻿namespace MandelZoom
 {
     using System;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Imaging;
     using System.Threading;
+    using System.Threading.Tasks;
     using System.Windows.Forms;
     using Properties;
 
@@ -20,7 +20,6 @@
         private Func<int, double, Color> colorFunction;
         private RectangleD initialFractalArea;
         private Bitmap initialFractalBitmap;
-        private BackgroundWorker looper;
 
         #region Init
 
@@ -46,8 +45,7 @@
             Graphics formGraphics = this.CreateGraphics();
             formGraphics.DrawImageUnscaled(this.initialFractalBitmap, 0, 0);
             this.stopwatch.Restart();
-            this.looper = new BackgroundWorker();
-            this.looper.DoWork += delegate
+            Task.Run(() =>
             {
                 while (true)
                 {
@@ -92,8 +90,7 @@
                         NativeMethods.GDI32.DeleteObject(nativeZoomOutBitmapHandle);
                     }
                 }
-            };
-            this.looper.RunWorkerAsync();
+            });
         }
 
         #endregion Init

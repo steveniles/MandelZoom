@@ -16,29 +16,28 @@
 
         internal static void SetFormOwner(Form form, IntPtr ownerHandle)
         {
-            NativeMethods.USER32.SetWindowLongPtr(form.Handle, NativeMethods.GWLP_HWNDPARENT, ownerHandle);
+            USER32.SetWindowLongPtr(form.Handle, GWLP_HWNDPARENT, ownerHandle);
         }
 
         internal static bool TrySetFormChildWindowStyle(Form form)
         {
-            long newStyle = (long)NativeMethods.USER32.GetWindowLongPtr(form.Handle, NativeMethods.GWL_STYLE);
+            long newStyle = (long)USER32.GetWindowLongPtr(form.Handle, GWL_STYLE);
             if (newStyle == 0) return false;
-            newStyle = (newStyle | NativeMethods.WS_CHILD) & ~NativeMethods.WS_POPUP;
-            if (NativeMethods.USER32.SetWindowLongPtr(form.Handle, NativeMethods.GWL_STYLE, (IntPtr)newStyle) == IntPtr.Zero) return false;
-            return true;
+            newStyle = (newStyle | WS_CHILD) & ~WS_POPUP;
+            return USER32.SetWindowLongPtr(form.Handle, GWL_STYLE, (IntPtr)newStyle) != IntPtr.Zero;
         }
 
         internal static bool TrySetFormBoundsToMatchParent(Form form, IntPtr parentHandle)
         {
             Rectangle parentBounds;
-            if (!NativeMethods.USER32.GetClientRect(parentHandle, out parentBounds)) return false;
+            if (!USER32.GetClientRect(parentHandle, out parentBounds)) return false;
             form.Bounds = parentBounds;
             return true;
         }
 
         internal static bool BitBlockTransfer(IntPtr targetDC, int targetX, int targetY, int width, int height, IntPtr sourceDC, int sourceX, int sourceY)
         {
-            return NativeMethods.GDI32.BitBlt(targetDC, targetX, targetY, width, height, sourceDC, sourceX, sourceY, NativeMethods.SRCCOPY);
+            return GDI32.BitBlt(targetDC, targetX, targetY, width, height, sourceDC, sourceX, sourceY, SRCCOPY);
         }
 
         internal static class USER32

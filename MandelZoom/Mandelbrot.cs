@@ -63,7 +63,7 @@
                         // Color pixel based on number of iterations and escape magnitude
                         // Save time by only calculating iterations for points not in one of the large bulbs, as many pixels in the initial fractal are.
                         double finalMagnitude;
-                        Color color = (IsInCardioid(x, y) || IsInPeriod2Bulb(x, y)) ? Color.Black : colorFunction(CountIterations(x, y, maximumIterations, out finalMagnitude), finalMagnitude);
+                        var color = (IsInCardioid(x, y) || IsInPeriod2Bulb(x, y)) ? Color.Black : colorFunction(CountIterations(x, y, maximumIterations, out finalMagnitude), finalMagnitude);
                         *mirrorBGR = *pointerBGR = color.B;
                         *++mirrorBGR = *++pointerBGR = color.G;
                         *++mirrorBGR = *++pointerBGR = color.R;
