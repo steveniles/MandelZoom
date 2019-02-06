@@ -2,7 +2,7 @@
 
 # MandelZoom
 A fractal screen saver that zooms in on the Mandelbrot set.  
-Unlike most fractal screen savers that animate continuously, this one does a periodic 'select and enhance!' style of zoom.
+Unlike most fractal screen savers that animate continuously, this one does a periodic 'select and enhance' style of zoom.
 
 ## Screenshots
 [![Silver Frost](https://www.steveniles.ca/MandelZoom/images/SilverFrost_thumbnail.jpg)](https://www.steveniles.ca/MandelZoom/images/SilverFrost.jpg)
@@ -25,4 +25,4 @@ That's it! The screen saver should now show up in Control Panel.
 
 ## Source Code & Technical Details
 The source code for this screen saver is available to view [here](https://github.com/steveniles/MandelZoom).  
-There is a wiki describing technical details for screen savers [here](https://github.com/steveniles/MandelZoom/wiki).
+There is a wiki describing technical details for programming screen savers [here](https://github.com/steveniles/MandelZoom/wiki).
