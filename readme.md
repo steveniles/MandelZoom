@@ -5,10 +5,10 @@ A fractal screen saver that zooms in on the Mandelbrot set.
 Unlike most fractal screen savers that animate continuously, this one does a periodic 'select and enhance!' style of zoom.
 
 ## Screenshots
-* [Silver Frost](http://www.steveniles.ca/MandelZoom/images/SilverFrost.jpg)  
-* [Neon Glow](http://www.steveniles.ca/MandelZoom/images/NeonGlow.jpg)  
-* [Solar Flare](http://www.steveniles.ca/MandelZoom/images/SolarFlare.jpg)
-* [Psychedelic](http://www.steveniles.ca/MandelZoom/images/Psychedelic.jpg)
+[![Silver Frost](https://www.steveniles.ca/MandelZoom/images/SilverFrost_thumbnail.jpg)](https://www.steveniles.ca/MandelZoom/images/SilverFrost.jpg)
+[![Neon Glow](https://www.steveniles.ca/MandelZoom/images/NeonGlow_thumbnail.jpg)](https://www.steveniles.ca/MandelZoom/images/NeonGlow.jpg)
+[![Solar Flare](https://www.steveniles.ca/MandelZoom/images/SolarFlare_thumbnail.jpg)](https://www.steveniles.ca/MandelZoom/images/SolarFlare.jpg)
+[![Psychedelic](https://www.steveniles.ca/MandelZoom/images/Psychedelic_thumbnail.jpg)](https://www.steveniles.ca/MandelZoom/images/Psychedelic.jpg)
 
 ## Requirements
 * Microsoft Windows (64-bit)  
