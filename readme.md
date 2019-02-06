@@ -1,7 +1,6 @@
 ![](https://www.steveniles.ca/MandelZoom/images/mandelzoom.png)
-# MandelZoom
 
-## Description
+# MandelZoom
 A fractal screen saver that zooms in on the Mandelbrot set.  
 Unlike most fractal screen savers that animate continuously, this one does a periodic 'select and enhance!' style of zoom.
 
