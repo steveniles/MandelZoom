@@ -1,3 +1,4 @@
+![](https://www.steveniles.ca/MandelZoom/images/mandelzoom.png)
 # MandelZoom
 
 ## Description
